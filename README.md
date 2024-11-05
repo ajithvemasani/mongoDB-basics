@@ -7,6 +7,7 @@
 - [Find](#find)
 - [Update Documents](#update-documents)
 - [Delete Documents](#delete-documents)
+- [Comparision](#comparision)
 
 ## Create Collection
 show dbs - to show the databases.
@@ -67,5 +68,19 @@ db.students.deleteOne(filter) - filter criteria
 db.students.deleteOne({name:"Ajith"}) - Doc with name as Ajith will be deleted
 db.students.deleteMany({fullTime:false}) - Doc with fullTime as false will be deleted
 db.students.deleteMany({registerDate:{$exists:false}}) - Docs without registerDate field will be deleted
+
+## Comparision
+### ne - Not equals
+db.students.find({name:{$ne:"Ajith"}}) - returns all docs which doesn't have name as Ajith
+### lt, lte - lessthan & lessthan equal to
+db.students.find({age:{$lt:27}})
+db.students.find({age:{$lte:27}})
+db.students.find({age:{$gt:27}})
+db.students.find({age:{$gte:27}})
+
+db.students.find({gpa:{$gte:3, $lte:3.9}}) - both lessthan and greaterthan
+### in & nin - IN and Not IN
+db.students.find({name:{$in:["Ajith", "Sai"]}}) - Returns docs with names in arrays
+
 
 
