@@ -8,6 +8,9 @@
 - [Update Documents](#update-documents)
 - [Delete Documents](#delete-documents)
 - [Comparision](#comparision)
+- [logical](#logical)
+- [indexes](#indexes)
+- [collection](#collections)
 
 ## Create Collection
 show dbs - to show the databases.<br/>
@@ -81,6 +84,38 @@ db.students.find({age:{$gte:27}})<br/>
 db.students.find({gpa:{$gte:3, $lte:3.9}}) - both lessthan and greaterthan<br/>
 ### in & nin - IN and Not IN
 db.students.find({name:{$in:["Ajith", "Sai"]}}) - Returns docs with names in arrays<br/>
+
+## Logical
+### And
+db.students.find({$and: [{fullTime:true}, {age:{$lte:22}}]}) - And condition to check both <br/>
+Similarly we have OR and NOR <br/>
+db.students.find({$or: [{fullTime:true}, {age:{$lte:22}}]}) <br/>
+db.students.find({$nor: [{fullTime:true}, {age:{$lte:22}}]}) - Both should be false <br/>
+### Not
+db.students.find({age:{$not:{$gte:30}}}) - Additional benifit is, it returns nulls too. So students which age as null will also be returned <br/>
+
+
+## Indexes
+Allow for a quick look up of field but it take more memory and slows insert and update operation. Use wisely<br/>
+### Execution Stats
+db.students.find({name:"Ajith"}).explain("executionStat") - Gives the execution stats of a query <br/>
+### Create Index
+db.students.createIndex({name:1}) - 1 in Asc order and -1 for desc order <br/>
+### Get Index
+db.students.getIndexes()<br/>
+### Drop Index
+db.students.dropIndex("Index_Name")<br/>
+
+
+## Collections
+show collections - shows the collections<br/>
+db.createCollection("teahcer") - just creates a collection<br/>  
+db.createCollection("teacher", , {capped:true, size:1000000, max:100}) - If capped is true then we say to mongoDb that this collection has a maximum size.
+If capped is set to true then we have to set max size or max documents <br/>
+db.createCollection("teacher", , {capped:true, size:1000000, max:100}, {autoIndexId:true}) - Automatically we apply an index to Object Ids. <br/>
+db.teacher.drop() - drop a collection<br/>
+
+
 
 
 
